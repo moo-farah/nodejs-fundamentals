@@ -10,11 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/moo-farah/nodejs-fundamentals.git"
   },
+  "scripts": {
+    "start": "nodemon --env-file .env server.js"
+  },
   "license": "ISC",
   "author": "Mohamed",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
