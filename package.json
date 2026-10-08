@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-fundamentals",
+  "version": "1.0.0",
+  "description": "fundamental course for nodejs",
+  "homepage": "https://github.com/moo-farah/nodejs-fundamentals#readme",
+  "bugs": {
+    "url": "https://github.com/moo-farah/nodejs-fundamentals/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moo-farah/nodejs-fundamentals.git"
+  },
+  "license": "ISC",
+  "author": "Mohamed",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
