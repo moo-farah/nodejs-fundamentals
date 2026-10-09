@@ -8,28 +8,57 @@ const users = [
     { id: 5, name: 'Dj Khalid' },
 ];
 
-const server = createServer((req, res) => {
-    if (req.url === '/api/users' && req.method === 'GET') {
-        res.setHeader('Content-Type', 'application/json');
-        res.write(JSON.stringify(users));
-        res.end();
-    } else if (req.url.match(/\/api\/users\/([0-9]+)/) && req.method === 'GET') {
+// Logger Middleware
+const logger = (req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+};
 
-        const userId = req.url.split('/')[3];
-        const user = users.find(user => user.id === parseInt(userId));
-        if (user) {
-            res.setHeader('Content-Type', 'application/json');
-            res.write(JSON.stringify(user));
-            res.end();
-        } else {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify({ message: 'User not found' }));
-            res.end();
-        }
-    } else {    
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Not Found' }));
+// JSON Middleware
+const jsonMiddleware = (req, res, next) => {
+    res.setHeader('Content-Type', 'application/json');
+    next();
+};
+
+// Route handler for the GET /api/users
+const getUsers = (req, res) => {
+    res.write(JSON.stringify(users));
+    res.end();
+};
+
+// Route handler for the GET /api/users/:id
+const getUserById = (req, res) => {
+    const userId = req.url.split('/')[3];
+    const user = users.find(user => users.id === parseInt(userId));
+    if (user) {
+        res.write(JSON.stringify(user));
+    } else {
+        res.statusCode = 404;
+        res.write(JSON.stringify({ message: 'User not found' })); 
     }
+    res.end();
+};
+
+// Route not found handler
+const notFound =(req, res) => {
+    res.statusCode = 404;
+    res.write(JSON.stringify({ message: 'Not Found' }));
+    res.end();
+};
+
+
+const server = createServer((req, res) => {
+    logger(req, res, () => {
+       jsonMiddleware(req, res, () => {
+        if (req.url === '/api/users' && req.method === 'GET') {
+            getUsers(req, res);
+       } else if (req.url.match(/\/api\/users\/([0-9]+)/) && req.method === 'GET') {
+        getUserById(req, res);
+       } else {
+        notFound(req, res);
+       }
+    });
+   });
 });
 
 server.listen(PORT, () => {
