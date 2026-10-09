@@ -11,7 +11,7 @@
     "url": "git+https://github.com/moo-farah/nodejs-fundamentals.git"
   },
   "scripts": {
-    "start": "nodemon --env-file .env server.js"
+    "start": "nodemon --env-file .env api.js"
   },
   "license": "ISC",
   "author": "Mohamed",
